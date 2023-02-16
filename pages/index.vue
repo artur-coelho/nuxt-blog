@@ -3,21 +3,18 @@
     <section class="intro">
       <h1>Get the latest tech news!</h1>
     </section>
-    <section class="featured-posts">
-      <PostPreview  id="1" thumbnail="https://www.brookings.edu/wp-content/uploads/2017/11/metro_20171121_tech-empowers-tech-polarizes-mark-muro.jpg" title="Hello There!" previewText="This is my first post!"/>
-      <PostPreview  id="2" thumbnail="https://www.brookings.edu/wp-content/uploads/2017/11/metro_20171121_tech-empowers-tech-polarizes-mark-muro.jpg" title="Hello There - the second time!" previewText="This is my second post!"/><PostPreview  id="3" thumbnail="https://www.brookings.edu/wp-content/uploads/2017/11/metro_20171121_tech-empowers-tech-polarizes-mark-muro.jpg" title="Hi!" previewText="This is my third post!"/>
-     
-    </section>
+    <PostList />
   </div>
 </template>
 
 <script>
-import PostPreview from '../components/Posts/PostPreview';
+import PostList from '../components/Posts/PostList.vue';
 
 export default {
-components: {
-  PostPreview
-}
+  components: {
+    PostList
+
+  }
 }
 </script>
 
@@ -27,6 +24,7 @@ components: {
   position: relative;
   padding: 30px;
   box-sizing: border-box;
+  background-image: url('~assets/images/main-page-background.jpg');
   background-position: center;
   background-size: cover;
 }
@@ -51,16 +49,4 @@ components: {
     font-size: 2rem;
   }
 }
-
-.featured-posts {
-  display: flex;
-  padding: 20px;
-  box-sizing: border-box;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-
-}
-
-
 </style>
