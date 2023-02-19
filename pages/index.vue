@@ -4,7 +4,7 @@
       <h1>Get the latest tech news!</h1>
     </section>
     <PostList />
-  </div>
+</div>
 </template>
 
 <script>
@@ -13,7 +13,6 @@ import PostList from '../components/Posts/PostList.vue';
 export default {
   components: {
     PostList
-
   }
 }
 </script>

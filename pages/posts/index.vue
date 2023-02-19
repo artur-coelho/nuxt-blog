@@ -4,10 +4,11 @@ import PostList from '../../components/Posts/PostList.vue';
 <template>
   <div class="posts-page">
     <PostList />
-  </div>
+</div>
 </template>
 
 <script>
+
 import PostList from '../../components/Posts/PostList.vue';
 
 export default {
