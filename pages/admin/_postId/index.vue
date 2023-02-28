@@ -3,7 +3,7 @@
     <section class="update-form">
       <AdminPostForm :post="loadedPost" />
     </section>
-</div>
+  </div>
 </template>
 
 <script>
@@ -26,7 +26,7 @@ export default {
     return {
       loadedPost: {
         author: 'Atur',
-        title: 'My aewsome porst',
+        title: 'My aewsome post',
         content: 'super amazing post',
         thumbnailLink: 'https://www.brookings.edu/wp-content/uploads/2017/11/metro_20171121_tech-empowers-tech-polarizes-mark-muro.jpg',
       }
