@@ -7,16 +7,10 @@
       <h1>Existing Posts</h1>
       <PostList isAdmin />
     </section>
-</div>
+  </div>
 </template>
 
 <script>
-
-
-
-
-
-
 
 import PostList from '../../components/Posts/PostList.vue';
 import AppButton from '../../components/UI/AppButton.vue';

@@ -11,7 +11,7 @@
     <AppButton type="submit">Save</AppButton>
 
     <AppButton type="button" style="margin-left: 10px" btn-style="cancel" @click="onCancel">Cancel</AppButton>
-</form>
+  </form>
 </template>
 
 <script>
@@ -33,6 +33,7 @@ export default {
       required: false,
     }
   },
+  emits: ['submit'],
   data() {
     return {
       editedPost: this.post ? { ...this.post } : {
@@ -45,7 +46,7 @@ export default {
   },
   methods: {
     onSave() {
-      console.log(this.editedPost)
+      this.$emit('submit', this.editedPost)
     },
     onCancel() {
       this.$router.push('/admin')
