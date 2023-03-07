@@ -1,18 +1,39 @@
 <template>
   <div class="single-post-page">
     <section class="post">
-      <h1 class="post-title">Title of the Post</h1>
+      <h1 class="post-title">{{ loadedPost.title }}</h1>
       <div class="post-details">
-        <div class="post-detail">Last updated on XXXX</div>
-        <div class="post-detail">Written by NAME</div>
+        <div class="post-detail">Last updated on {{ loadedPost.updatedDate }}</div>
+        <div class="post-detail">Written by {{ loadedPost.name }}</div>
       </div>
-      <p class="post-content">Content of the post</p>
+      <p class="post-content">{{ loadedPost.content }}</p>
     </section>
     <section class="post-feedback">
-      <p>Let me know what you think about the post, send a mail to <a href="mailto:feedback@my-awesome-domain.com">feedback@my-awesome-domain.com</a></p>
+      <p>Let me know what you think about the post, send a mail to <a
+          href="mailto:feedback@my-awesome-domain.com">feedback@my-awesome-domain.com</a></p>
     </section>
   </div>
 </template>
+
+<script>
+export default {
+  asyncData(context, callback) {
+    setTimeout(() => {
+      callback(null, {
+        loadedPost: {
+          id: '1',
+          title: 'First Post (ID: ' + context.params.id + ')',
+          previewText: 'This is our first post!',
+          updatedDate: new Date(),
+          name: 'Artur',
+          content: "Some dummy content text wich is definitely not the preview text",
+          thumbnail: 'https://www.brookings.edu/wp-content/uploads/2017/11/metro_20171121_tech-empowers-tech-polarizes-mark-muro.jpg'
+        }
+      })
+    }, 1000)
+  }
+}
+</script>
 
 <style scoped>
 .single-post-page {
