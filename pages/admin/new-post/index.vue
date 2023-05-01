@@ -17,11 +17,13 @@ export default {
   },
   methods: {
     onSubmitted(postData) {
-      axios.post('https://nuxt2-blog-default-rtdb.firebaseio.com/posts.json', postData).then((result) => {
-        console.log(result)
-      }).catch(err => {
-        console.log(err)
-      })
+      axios.post('https://nuxt2-blog-default-rtdb.firebaseio.com/posts.json', { ...postData, updatedDate: new Date() })
+        .then((result) => {
+          console.log(result)
+          this.$router.push('/admin')
+        }).catch(err => {
+          console.log(err)
+        })
     }
   }
 }
