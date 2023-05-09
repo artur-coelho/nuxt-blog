@@ -50,7 +50,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ["~plugins/core-components.js", "~plugins/date-filter.js"],
 
   /*
    ** Nuxt.js modules
