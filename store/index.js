@@ -1,4 +1,5 @@
 import Vuex from "vuex";
+import axios from "axios";
 
 const createStore = () => {
   return new Vuex.Store({
@@ -8,34 +9,64 @@ const createStore = () => {
     mutations: {
       setPosts(state, posts) {
         state.loadedPosts = posts;
+      },
+      addPost(state, post) {
+        state.loadedPosts.push(post);
+      },
+      editPost(state, editedPost) {
+        const index = state.loadedPosts.findIndex(
+          post => post.id === editedPost.id
+        );
+        state.loadedPosts[index] = editedPost;
       }
     },
     actions: {
       nuxtServerInit(vuexContext, context) {
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            vuexContext.commit("setPosts", [
-              {
-                id: "1",
-                title: "First Post",
-                previewText: "This is our first post!",
-                thumbnail:
-                  "https://www.brookings.edu/wp-content/uploads/2017/11/metro_20171121_tech-empowers-tech-polarizes-mark-muro.jpg"
-              },
-              {
-                id: "2",
-                title: "Second Post",
-                previewText: "This is our second post!",
-                thumbnail:
-                  "https://www.brookings.edu/wp-content/uploads/2017/11/metro_20171121_tech-empowers-tech-polarizes-mark-muro.jpg"
-              }
-            ]);
-            resolve();
-          });
-        }, 1500);
+        return axios
+          .get(process.env.baseUrl + "/posts.json")
+          .then(res => {
+            console.log(res);
+            const postsArray = [];
+            for (const key in res.data) {
+              postsArray.push({ ...res.data[key], id: key });
+            }
+            vuexContext.commit("setPosts", postsArray);
+          })
+          .catch(e => context.error(e));
       },
       setPosts(vuexContext, posts) {
         vuexContext.commit("setPosts", posts);
+      },
+      addPost(vuexContext, postData) {
+        return axios
+          .post(process.env.baseUrl + "/posts.json", {
+            ...postData,
+            updatedDate: new Date()
+          })
+          .then(result => {
+            console.log(result);
+            vuexContext.commit("addPost", {
+              ...postData,
+              id: result.data.name
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      },
+      editPost(vuexContext, editedPost) {
+        return axios
+          .put(
+            process.env.baseUrl + "/posts/" + editedPost.id + ".json",
+            editedPost
+          )
+          .then(res => {
+            console.log(res);
+            vuexContext.commit("editPost", editedPost);
+          })
+          .catch(e => {
+            console.log(e);
+          });
       }
     },
     getters: {
