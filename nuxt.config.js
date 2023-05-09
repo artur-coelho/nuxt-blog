@@ -7,11 +7,15 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: pkg.name,
+    title: "WD Blog",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: pkg.description }
+      {
+        hid: "description",
+        name: "description",
+        content: "My cool web development blog content"
+      }
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
@@ -26,7 +30,17 @@ module.exports = {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: "#3B8070" },
+  loading: {
+    color: "#3B8070",
+    height: "4px",
+    duration: 5000 /* default duration 5s */
+  },
+
+  // If the app was a spa:
+  // loadingIndicator: {
+  //   name: "circle",
+  //   color: "fa923f"
+  // },
 
   /*
    ** Global CSS
@@ -51,5 +65,9 @@ module.exports = {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  env: {
+    baseUrl:
+      process.env.BASE_URL || "https://nuxt2-blog-default-rtdb.firebaseio.com"
   }
 };
