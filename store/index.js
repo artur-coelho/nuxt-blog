@@ -19,8 +19,8 @@ const createStore = () => {
         );
         state.loadedPosts[index] = editedPost;
       },
-      setToken(state, tokenData) {
-        state.token = tokenData;
+      setToken(state, token) {
+        state.token = token;
       }
     },
     actions: {
@@ -45,7 +45,7 @@ const createStore = () => {
           updatedDate: new Date()
         };
         return this.$axios
-          .$post("/posts.json", createdPost)
+          .$post("/posts.json?auth=" + vuexContext.state.token, createdPost)
           .then(data => {
             vuexContext.commit("addPost", {
               ...postData,
@@ -59,15 +59,19 @@ const createStore = () => {
       editPost(vuexContext, editedPost) {
         return this.$axios
           .$put(
-            process.env.baseUrl + "/posts/" + editedPost.id + ".json",
+            process.env.baseUrl +
+              "/posts/" +
+              editedPost.id +
+              ".json?auth=" +
+              vuexContext.state.token,
             editedPost
           )
           .then(res => {
             console.log(res);
             vuexContext.commit("editPost", editedPost);
           })
-          .catch(e => {
-            console.log(e);
+          .catch(err => {
+            console.log(err);
           });
       },
       authenticateUser(vuexContext, authData) {
@@ -97,6 +101,9 @@ const createStore = () => {
     getters: {
       loadedPosts(state) {
         return state.loadedPosts;
+      },
+      isAuthenticated(state) {
+        return state.token != null;
       }
     }
   });
