@@ -1,4 +1,6 @@
 const pkg = require("./package");
+const bodyParser = require("body-parser");
+const axios = require("axios");
 
 module.exports = {
   mode: "universal",
@@ -55,7 +57,12 @@ module.exports = {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: ["@nuxtjs/axios"],
+  axios: {
+    baseURL:
+      process.env.BASE_URL || "https://nuxt2-blog-default-rtdb.firebaseio.com",
+    credentials: false
+  },
 
   /*
    ** Build configuration
@@ -68,10 +75,32 @@ module.exports = {
   },
   env: {
     baseUrl:
-      process.env.BASE_URL || "https://nuxt2-blog-default-rtdb.firebaseio.com"
+      process.env.NUXT_ENV_BASE_URL ||
+      "https://nuxt2-blog-default-rtdb.firebaseio.com",
+    fbAPIKey:
+      process.env.NUXT_ENV_FBKEY || "AIzaSyCUOxqQmlJndOxwflqpPBq1l630G5u85Tg"
   },
   transition: {
     name: "fade",
     mode: "out-in"
+  },
+  serverMiddleware: [bodyParser.json(), "~/api"],
+  generate: {
+    routes: function() {
+      return axios
+        .get("https://nuxt2-blog-default-rtdb.firebaseio.com/posts.json")
+        .then(res => {
+          const routes = [];
+          for (const key in res.data) {
+            routes.push({
+              route: "/posts/" + key,
+              payload: {
+                postData: res.data[key]
+              }
+            });
+          }
+          return routes;
+        });
+    }
   }
 };
